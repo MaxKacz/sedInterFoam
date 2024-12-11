@@ -100,3 +100,27 @@ if (InitFreeze.value()==2)
     phis = (fvc::interpolate(Us) & mesh.Sf());
     phi = fvc::interpolate(alphas)*phis + fvc::interpolate(alphaf)*phif;
 }
+
+if (InitFreeze.value()==3)
+{
+    scalar indv1((vector(0, 1, 0) & gravity.value()));
+    scalar indv2((vector(0, 0, 1) & gravity.value()));
+
+    int ind = 0;
+    if (indv1 != 0) {ind = 1;}
+    if (indv2 != 0) {ind = 2;}
+
+    forAll(alphas, cell)
+    {
+// initially, we need to fix the bed level, and let the flow develop
+// only cell centers are considered
+// 0-->x, 1-->y, 2-->z
+       if (mesh.cellCentres()[cell][ind] < fixbeddepth.value())
+       {
+// only exclude the streamwise conponents
+           Us[cell] = vector(0, 0, 0);
+       }
+    }
+    phis = (fvc::interpolate(Us) & mesh.Sf());
+    phi = fvc::interpolate(alphas)*phis + fvc::interpolate(alphaf)*phif;
+}
