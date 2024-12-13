@@ -30,26 +30,30 @@ License
     for (int acorr=0; acorr<nAlphasCorr; acorr++)
     {
 
-        alphas.correctBoundaryConditions();
-        fvScalarMatrix alphasEqn
-        (
-             fvm::ddt(alphas)
-           + fvm::div(phi, alphas, scheme)
-           + fvm::div(-fvc::flux(-phir, (1.0-alphas), schemer), alphas, schemer)
-        );
+	if (calcAlphas)
+	{
+		alphas.correctBoundaryConditions();
+		fvScalarMatrix alphasEqn
+		(
+		     fvm::ddt(alphas)
+		   + fvm::div(phi, alphas, scheme)
+		   + fvm::div(-fvc::flux(-phir, (1.0-alphas), schemer), alphas, schemer)
+		);
 
-        alphasEqn.relax();
-        alphasEqn.solve();
+		alphasEqn.relax();
+		alphasEqn.solve();
 
-        if (packingLimiter)
-        {
-            int i=0;
-            while (i<100 && max(alphas).value()>=alphasMax.value())
-            {
-                #include "packingLimiter.H"
-                i++;
-            }
-        }
+		if (packingLimiter)
+		{
+		    int i=0;
+		    while (i<100 && max(alphas).value()>=alphasMax.value())
+		    {
+		        #include "packingLimiter.H"
+		        i++;
+		    }
+		}
+	}
+	
         alphas.min(alphasMax);
         alphas.max(0);
         alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
