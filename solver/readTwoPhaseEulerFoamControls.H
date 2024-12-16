@@ -26,7 +26,7 @@ License
 
 int nGammaCorr(pimple.dict().get<int>("nGammaCorr"));
 int nAlphasCorr(pimple.dict().get<int>("nAlphasCorr"));
-int calcAlphas(pimple.dict().lookupOrDefault<Switch>("calcAlphas", true));
+bool calcAlphas(pimple.dict().lookupOrDefault<Switch>("calcAlphas", true));
 int nAlphaSubCycles(pimple.dict().get<int>("nAlphaSubCycles"));
 bool MULESCorr(pimple.dict().lookupOrDefault<Switch>("MULESCorr", false));
 bool gammaApplyPrevCorr
