@@ -134,6 +134,7 @@ protected:
             const volScalarField& ESD4CBuoy_;
             const volScalarField& ESD5CBuoy_;
             const volScalarField& ESD_;
+            const volScalarField& nuf_;
 
         // Fields
 
@@ -191,7 +192,7 @@ public:
                 new volScalarField
                 (
                     "DkEff",
-                    alphaKOmega_*this->nut_ + this->nu()
+                    alphaKOmega_*this->nut_ + nuf_
                 )
             );
         }
@@ -204,7 +205,7 @@ public:
                 new volScalarField
                 (
                     "DomegaEff",
-                    alphaOmegaOmega_*this->nut_ + this->nu()
+                    alphaOmegaOmega_*this->nut_ + nuf_
                 )
             );
         }

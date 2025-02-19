@@ -206,6 +206,7 @@ twophasekOmegaCBuoy<BasicTurbulenceModel>::twophasekOmegaCBuoy
     ESD4CBuoy_(U.db().lookupObject<volScalarField> ("ESD4CBuoy")),
     ESD5CBuoy_(U.db().lookupObject<volScalarField> ("ESD5CBuoy")),
     ESD_(U.db().lookupObject<volScalarField> ("ESD")),
+    nuf_(U.db().lookupObject<volScalarField> ("nuf")),
     k_
     (
         IOobject
