@@ -86,6 +86,9 @@ makeRASModel(twophaseMixingLengthConst);
 #include "twophasekOmega.H"
 makeRASModel(twophasekOmega);
 
+#include "twophasekOmegaCBuoy.H"
+makeRASModel(twophasekOmegaCBuoy);
+
 #include "partDynamicLagrangian.H"
 makeLESModel(partDynamicLagrangian);
 

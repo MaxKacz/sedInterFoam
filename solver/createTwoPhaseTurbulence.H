@@ -205,3 +205,107 @@ volScalarField ESD
     ),
     KE3*ESD3
 );
+
+dimensionedScalar kPuits
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "kPuits",
+        dimensionedScalar("kPuits", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar kSource
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "kSource",
+        dimensionedScalar("kSource", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar kMagPuits
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "kMagPuits",
+        dimensionedScalar("kMagPuits", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar kMagSource
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "kMagSource",
+        dimensionedScalar("kMagSource", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar omegaPuits
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "omegaPuits",
+        dimensionedScalar("omegaPuits", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar omegaSource
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "omegaSource",
+        dimensionedScalar("omegaSource", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar omegaMagPuits
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "omegaMagPuits",
+        dimensionedScalar("omegaMagPuits", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+dimensionedScalar omegaMagSource
+(
+    twophaseRASProperties.getOrDefault
+    (
+        "omegaMagSource",
+        dimensionedScalar("omegaMagSource", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0)
+    )
+);
+
+volScalarField ESD4CBuoy
+(
+    IOobject
+    (
+        "ESD4CBuoy",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    -((SUS/(alphaf*rhof*rhof))*(fvc::grad(p_rgh) + rhof*gravity) & ((rhow-rhog)*alphaf*fvc::grad(gamma) + (rhos-(1.0-gamma)*rhog-gamma*rhow)*fvc::grad(alphas))) + KE1*ESD1
+);
+
+volScalarField ESD5CBuoy
+(
+    IOobject
+    (
+        "ESD5CBuoy",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    /*max
+    (
+        -(SUS/(alphaf*rhof*rhof))*(fvc::grad(p_rgh) + rhof*gravity) & ((rhow-rhog)*alphaf*fvc::grad(gamma) + (rhos-(1.0-gamma)*rhog-gamma*rhow)*fvc::grad(alphas)),
+        scalar(0.0)*ESD1
+    )
+    + KE1*ESD1*/
+    -((SUS/(alphaf*rhof*rhof))*(fvc::grad(p_rgh) + rhof*gravity) & ((rhow-rhog)*alphaf*fvc::grad(gamma) + (rhos-(1.0-gamma)*rhog-gamma*rhow)*fvc::grad(alphas))) + KE1*ESD1
+);

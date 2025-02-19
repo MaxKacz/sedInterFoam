@@ -70,3 +70,21 @@ ESD5 = ESD5 + KE1*ESD1;
 ESD3 = -2.0*K*alphas/rhof;
 
 ESD = KE3*ESD3;   //need to check here!
+
+
+
+// Modified buoyancy term :
+
+// stratification in k equation
+ESD4CBuoy = -(SUS/(alphaf*rhof*rhof))*(fvc::grad(p_rgh) + rhof*gravity) & ((rhow-rhog)*alphaf*fvc::grad(gamma) + (rhos-(1.0-gamma)*rhog-gamma*rhow)*fvc::grad(alphas));
+// if ESD4 < 0, then it should be implemented, else, no
+//ESD4CBuoy = min(ESD4CBuoy, scalar(0.0)*ESD4CBuoy);
+//ESD4CBuoy = min(ESD4CBuoy, -ESD4CBuoy);
+ESD4CBuoy = kPuits*min(ESD4CBuoy, scalar(0.0)*ESD4CBuoy) + kSource*max(ESD4CBuoy, scalar(0.0)*ESD4CBuoy) + kMagPuits*min(ESD4CBuoy, -ESD4CBuoy) + kMagSource*max(ESD4CBuoy, -ESD4CBuoy) + KE1*ESD1;
+
+
+// stratification in omega equation
+ESD5CBuoy = -(SUS/(alphaf*rhof*rhof))*(fvc::grad(p_rgh) + rhof*gravity) & ((rhow-rhog)*alphaf*fvc::grad(gamma) + (rhos-(1.0-gamma)*rhog-gamma*rhow)*fvc::grad(alphas));
+// if ESD5 > 0, then it should be implemented, else, no
+//ESD5CBuoy = max(ESD5CBuoy, scalar(0.0)*ESD5CBuoy);
+ESD5CBuoy = omegaPuits*min(ESD5CBuoy, scalar(0.0)*ESD5CBuoy) + omegaSource*max(ESD5CBuoy, scalar(0.0)*ESD5CBuoy) + omegaMagPuits*min(ESD5CBuoy, -ESD5CBuoy) + omegaMagSource*max(ESD5CBuoy, -ESD5CBuoy) + KE1*ESD1;
