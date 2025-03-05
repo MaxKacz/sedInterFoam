@@ -111,6 +111,15 @@ twophasekOmegaCBuoy<BasicTurbulenceModel>::twophasekOmegaCBuoy
             1.0
         )
     ),
+    C4k_
+    (
+        dimensioned<scalar>::getOrAddToDict
+        (
+            "C4k",
+            this->coeffDict_,
+            1.0
+        )
+    ),
     KE2_
     (
         dimensioned<scalar>::getOrAddToDict
@@ -371,7 +380,7 @@ void twophasekOmegaCBuoy<BasicTurbulenceModel>::correct()
       - fvm::SuSp(-G/k_, k_)
       + fvm::Sp(-Cmu_*omega_, k_)
       + fvm::Sp(ESD_, k_)
-      + fvm::Sp(KE4_*ESD4CBuoy_*nut/k_, k_)
+      + fvm::Sp(C4k_*KE4_*ESD4CBuoy_*nut/k_, k_)
       + ESD2()*fvm::Sp(KE2_, k_)
     );
 

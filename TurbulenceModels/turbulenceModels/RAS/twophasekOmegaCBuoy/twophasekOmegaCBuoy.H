@@ -51,6 +51,7 @@ Description
             betaOmega        0.072;
             C3om             0.35;
             C4om             1.0;
+            C4k              1.0;
             KE2              1.0;
             KE4              1.0;
             alphaKomega      0.5;
@@ -115,6 +116,7 @@ protected:
             Switch writeTke_;
             dimensionedScalar C3om_;
             dimensionedScalar C4om_;
+            dimensionedScalar C4k_;
             dimensionedScalar KE2_;
             dimensionedScalar KE4_;
 
